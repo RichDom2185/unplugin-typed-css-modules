@@ -3,6 +3,18 @@
   "type": "module",
   "license": "MIT",
   "version": "0.0.0",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "import": "./dist/vite.js",
+      "require": "./dist/vite.cjs"
+    }
+  },
   "scripts": {
     "build": "tsup",
     "format": "prettier --write ."
