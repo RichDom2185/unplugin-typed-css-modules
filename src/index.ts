@@ -3,6 +3,7 @@ import { glob } from "tinyglobby";
 import type { UnpluginFactory } from "unplugin";
 import { createUnplugin } from "unplugin";
 import cssGenerator from "./lib/css";
+import scssGenerator from "./lib/scss";
 
 export type Options = {
   /**
@@ -31,12 +32,6 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
   options
 ) => {
   const opts = { ...defaultOptions, ...options };
-  if (opts.scss) {
-    console.warn(
-      "[unplugin-typed-css-modules] SCSS is not supported yet, this option will be ignored."
-    );
-    opts.scss = false;
-  }
   const fileExts = [
     ...(opts.css ? ["css"] : []),
     ...(opts.scss ? ["scss", "sass"] : []),
@@ -47,6 +42,7 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
   const fileExtGlob = `**/*.module.${withBraces}`;
 
   const css = cssGenerator({ banner: PREFIX });
+  const scss = scssGenerator({ banner: PREFIX });
   return {
     name: "unplugin-starter",
     async watchChange(id, { event }) {
@@ -58,14 +54,16 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
         }
         return;
       }
-      await css.generate(id);
+      await (id.endsWith(".css") ? css.generate(id) : scss.generate(id));
     },
     async writeBundle() {
       const dirname = process.cwd();
       const files = await glob(fileExtGlob, { cwd: dirname, absolute: true });
       const results = await Promise.allSettled(
         // Fail the build if typings are out of date
-        files.map((file) => css.check(file))
+        files.map((file) =>
+          file.endsWith(".css") ? css.check(file) : scss.check(file)
+        )
       );
       const rejected = results.filter((r) => r.status === "rejected");
       if (rejected.length) {

@@ -22,6 +22,7 @@
   "dependencies": {
     "tinyglobby": "^0.2.15",
     "typed-css-modules": "^0.9.1",
+    "typed-scss-modules": "^8.1.1",
     "unplugin": "^2.3.10"
   },
   "devDependencies": {
