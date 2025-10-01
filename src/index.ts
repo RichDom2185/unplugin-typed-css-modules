@@ -4,6 +4,7 @@ import DtsCreator from "typed-css-modules";
 import Core from "typed-css-modules/lib/css-modules-loader-core/index.js";
 import type { UnpluginFactory } from "unplugin";
 import { createUnplugin } from "unplugin";
+import { resolveImportInconsistency } from "./lib/utils";
 
 export type Options = {
   /**
@@ -23,18 +24,8 @@ const defaultOptions: Options = {
   scss: false,
 };
 
-const Creator: typeof DtsCreator = Object.prototype.hasOwnProperty.call(
-  DtsCreator,
-  "default"
-)
-  ? (DtsCreator as any).default
-  : DtsCreator;
-
-const defaultPlugins = (
-  Object.prototype.hasOwnProperty.call(Core, "default")
-    ? (Core as any).default
-    : Core
-).defaultPlugins;
+const Creator = resolveImportInconsistency(DtsCreator);
+const defaultPlugins = resolveImportInconsistency(Core).defaultPlugins;
 
 const PREFIX = `/* eslint-disable */
 // WARNING: THIS FILE IS AUTO GENERATED, PLEASE DO NOT EDIT IT MANUALLY.
