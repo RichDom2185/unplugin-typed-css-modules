@@ -58,7 +58,9 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
     ...(opts.scss ? ["scss", "sass"] : []),
   ];
   const fileExtRegex = new RegExp(`\\.module\\.(${fileExts.join("|")})$`);
-  const fileExtGlob = `**/*.module.{${fileExts.join(",")}}`;
+  const withBraces =
+    fileExts.length === 1 ? fileExts[0] : `{${fileExts.join(",")}}`;
+  const fileExtGlob = `**/*.module.${withBraces}`;
 
   const dtsCreator = new Creator({
     loaderPlugins: [
