@@ -18,6 +18,8 @@ export type Options = {
   scss?: boolean;
 };
 
+export const PLUGIN_NAME = "unplugin-typed-css-modules";
+
 const defaultOptions: Options = {
   css: true,
   scss: false,
@@ -44,7 +46,7 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
   const css = cssGenerator({ banner: PREFIX });
   const scss = scssGenerator({ banner: PREFIX });
   return {
-    name: "unplugin-starter",
+    name: PLUGIN_NAME,
     async watchChange(id, { event }) {
       if (!fileExtRegex.test(id)) return;
       if (event === "delete") {
