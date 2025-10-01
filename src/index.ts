@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import { glob } from "tinyglobby";
 import DtsCreator from "typed-css-modules";
 import Core from "typed-css-modules/lib/css-modules-loader-core/index.js";
@@ -69,10 +70,15 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
     name: "unplugin-starter",
     async watchChange(id, { event }) {
       if (!fileExtRegex.test(id)) return;
+      if (event === "delete") {
+        const dtsFile = id + ".d.ts";
+        if (fs.existsSync(dtsFile)) {
+          fs.unlinkSync(dtsFile);
+        }
+        return;
+      }
       const content = await dtsCreator.create(id, undefined, true);
-      await (event === "delete"
-        ? content.deleteFile()
-        : content.writeFile(wrapContent));
+      await content.writeFile(wrapContent);
     },
     async writeBundle() {
       const dirname = process.cwd();
