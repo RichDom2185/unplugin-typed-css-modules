@@ -2,5 +2,20 @@
   "name": "unplugin-typed-css-modules",
   "type": "module",
   "license": "MIT",
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "scripts": {
+    "build": "tsup",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "tinyglobby": "^0.2.15",
+    "typed-css-modules": "^0.9.1",
+    "unplugin": "^2.3.10"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.1",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  }
 }
