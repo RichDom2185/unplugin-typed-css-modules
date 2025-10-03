@@ -25,7 +25,10 @@ const css = ({ banner }: CssOptions = {}) => {
     },
     async check(file: string) {
       const content = await dtsCreator.create(file, undefined, true);
-      await content.checkFile(wrapContent);
+      const ok = await content.checkFile(wrapContent);
+      if (!ok) {
+        throw new Error(`Missing/incorrect typings for ${file}`);
+      }
     },
   };
 };
