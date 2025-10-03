@@ -34,6 +34,7 @@ const scss = ({ banner }: ScssOptions = {}) => {
    */
   const opts: Options = {
     ...defaultScssOptions,
+    ignore: ["node_modules"],
     // Trim the end to match ts behavior of css.ts
     banner: banner?.trimEnd() ?? "",
     exportType: "default",

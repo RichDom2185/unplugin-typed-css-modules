@@ -60,7 +60,11 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
     },
     async writeBundle() {
       const dirname = process.cwd();
-      const files = await glob(fileExtGlob, { cwd: dirname, absolute: true });
+      const files = await glob(fileExtGlob, {
+        cwd: dirname,
+        absolute: true,
+        ignore: ["node_modules"],
+      });
       const results = await Promise.allSettled(
         // Fail the build if typings are out of date
         files.map((file) =>
