@@ -1,8 +1,25 @@
 {
   "name": "unplugin-typed-css-modules",
   "type": "module",
+  "author": "Richard Dominick",
   "license": "MIT",
   "version": "0.0.0",
+  "description": "Vite/Webpack/Rspack plugin to generate TypeScript definitions for CSS/SCSS modules.",
+  "keywords": [
+    "unplugin",
+    "css",
+    "scss",
+    "css-modules",
+    "scss-modules",
+    "plugin",
+    "vite",
+    "webpack",
+    "typescript",
+    "generator"
+  ],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -60,5 +77,13 @@
     "prettier": "^3.6.2",
     "tsup": "^8.5.0",
     "typescript": "^5.9.3"
+  },
+  "homepage": "https://github.com/RichDom2185/unplugin-typed-css-modules#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RichDom2185/unplugin-typed-css-modules.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RichDom2185/unplugin-typed-css-modules/issues"
   }
 }
