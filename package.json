@@ -3,7 +3,7 @@
   "type": "module",
   "author": "Richard Dominick",
   "license": "MIT",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Vite/Webpack/Rspack plugin to generate TypeScript definitions for CSS/SCSS modules.",
   "keywords": [
     "unplugin",
