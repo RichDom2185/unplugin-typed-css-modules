@@ -58,6 +58,11 @@ For more detailed usage instructions, please refer to the [Unplugin documentatio
   module.exports = config
   ```
 
+The plugin will now:
+
+- Watch for changes to `.module.css`, `.module.scss`, and `.module.sass` files during development, and update the corresponding `.d.ts` files automatically during development.
+- Ensure that all CSS-related types are up to date during the build step, and fail the build if any missing/mismatched types are found.
+
 ### Recommended: Configure Your Project Environment
 
 - When committing the generated `.d.ts` files to git, to hide them from Pull Request reviews on GitHub, mark them as auto-generated using a `.gitattributes` file:
