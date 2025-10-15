@@ -102,6 +102,12 @@ For more detailed usage instructions, please refer to the [Unplugin documentatio
   - You care about performance and want to avoid ESLint parsing the files altogether, or
   - Your ESLint setup includes `--report-unused-disable-directives` which might mistakenly flag these files as errors
 
+## Versioning Policy
+
+This project follows [Semantic Versioning](https://semver.org/), with the sole exception that [Environment Options](#environment-options) ***may*** introduce API changes in minor/patch releases. These API changes to environment options are not necessarily breaking, but may require changes to your build setup. Any such changes will be documented in the release notes.
+
+I am maintaining this project in my spare time, so maintaining multiple minor versions is not feasible. As such, any *patch* changes will not be backported to older *minor* versions. Please update to the latest *minor* version to get the latest bug fixes.
+
 ## Options
 
 For now, the plugin accepts two options:
