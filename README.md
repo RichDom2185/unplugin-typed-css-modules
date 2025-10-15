@@ -134,6 +134,50 @@ The plugin was originally created to fulfil personal needs and is designed to be
 
 In the future, I might add support for more features like further customization or performance optimizations. Feel free to open an [issue](https://github.com/RichDom2185/unplugin-typed-css-modules/issues) or a PR if you have any suggestions or feature requests and I will try to address them as soon as possible.
 
+## Environment Options
+
+Environment options are environment variables that can be set in your build environment to modify the plugin's behavior. These options are intended for assisting with one-off migrations or specific use cases, and **may introduce API changes in minor/patch releases**.
+
+Currently, there is only one environment option, `TCM_FORCE_BUILD`.
+
+### `TCM_FORCE_BUILD`
+
+- When set to `true` or `TRUE`, the plugin will always regenerate all `.d.ts` files during the `writeBundle` / build step, instead of the default behavior.
+- Use this to generate all `.d.ts` files the first time you add the plugin to an existing project, or if you have made bulk changes to your CSS/SCSS modules and want to regenerate all typings in one go.
+
+- Example (Yarn + Rsbuild):
+
+  ```json
+  // package.json
+  {
+    "scripts": {
+      "build": "rsbuild build"
+    }
+  }
+  ```
+
+  ```bash
+  # Without the environment variable, the build will fail if any typings are out of date
+  TCM_FORCE_BUILD=true yarn build
+  ```
+
+  If you use a build tool like Vite that watches all files (instead of just the module dependency graph), you can also use shell commands to trigger regeneration, instead of using this environment variable.
+
+  ```json
+  // package.json
+  {
+    "scripts": {
+      "dev": "vite"
+    }
+  }
+  ```
+
+  ```bash
+  yarn dev
+  # Then, in a separate terminal, "modify" all the files at once
+  touch **/*.module.css **/*.module.scss **/*.module.sass
+  ```
+
 ## Compatibility
 
 This plugin is built using [Unplugin](https://github.com/unjs/unplugin), so in theory, it should work with any build tool that supports unplugin, including but not limited to:
