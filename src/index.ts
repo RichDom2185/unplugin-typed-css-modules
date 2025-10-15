@@ -43,10 +43,18 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
     fileExts.length === 1 ? fileExts[0] : `{${fileExts.join(",")}}`;
   const fileExtGlob = `**/*.module.${withBraces}`;
 
+  const env = {
+    isDev: process.env.NODE_ENV === "development",
+    isRspack: false,
+  };
+
   const css = cssGenerator({ banner: PREFIX });
   const scss = scssGenerator({ banner: PREFIX });
   return {
     name: PLUGIN_NAME,
+    rspack() {
+      env.isRspack = true;
+    },
     async watchChange(id, { event }) {
       if (!fileExtRegex.test(id)) return;
       if (event === "delete") {
@@ -59,6 +67,12 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
       await (id.endsWith(".css") ? css.generate(id) : scss.generate(id));
     },
     async writeBundle() {
+      if (env.isRspack && env.isDev) {
+        // Rsbuild seems to call `writeBundle` even during dev mode, so we
+        // check here to avoid failing the server start.
+        // https://rsbuild.rs/config/mode#javascript-api
+        return;
+      }
       const dirname = process.cwd();
       const files = await glob(fileExtGlob, {
         cwd: dirname,
