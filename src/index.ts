@@ -46,10 +46,12 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
   const env = {
     isDev: process.env.NODE_ENV === "development",
     isRspack: false,
+    forceBuild: /(true|TRUE)/.test(process.env.TCM_FORCE_BUILD ?? ""),
   };
 
   const css = cssGenerator({ banner: PREFIX });
   const scss = scssGenerator({ banner: PREFIX });
+
   return {
     name: PLUGIN_NAME,
     rspack() {
@@ -82,7 +84,13 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
       const results = await Promise.allSettled(
         // Fail the build if typings are out of date
         files.map((file) =>
-          file.endsWith(".css") ? css.check(file) : scss.check(file)
+          env.forceBuild
+            ? file.endsWith(".css")
+              ? css.generate(file)
+              : scss.generate(file)
+            : file.endsWith(".css")
+              ? css.check(file)
+              : scss.check(file)
         )
       );
       const rejected = results.filter((r) => r.status === "rejected");
