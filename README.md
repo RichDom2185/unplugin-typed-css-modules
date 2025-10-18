@@ -115,7 +115,7 @@ I am maintaining this project in my spare time, so maintaining multiple minor ve
 
 ## Options
 
-For now, the plugin accepts two options:
+The plugin accepts the following options:
 
 ### `css: boolean`
 
@@ -126,6 +126,18 @@ For now, the plugin accepts two options:
 
 - Enables or disables processing of `.module.scss` and `.module.sass` files.
 - Default: `false`
+
+### `postcssPlugins: import('postcss').Plugin[]`
+
+- An array of additional PostCSS plugins to use for processing CSS files.
+- Alternatively, provide a function that returns an array of PostCSS plugins. This function will be called once on initialization with the list of default plugins.
+- Full signature:
+
+  ```ts
+  postcssPlugins?: Plugin[] | ((defaultPlugins: Plugin[]) => Plugin[]);
+  ```
+
+- Default: `undefined`
 
 ## FAQ
 
