@@ -8,7 +8,7 @@ const defaultPlugins = resolveImportInconsistency(Core).defaultPlugins;
 
 export type CssOptions = {
   banner?: string;
-  plugins?: Plugin[] | ((getDefaultPlugins: Plugin[]) => Plugin[]) | undefined;
+  plugins?: Plugin[] | ((defaultPlugins: Plugin[]) => Plugin[]) | undefined;
 };
 
 const css = ({ banner, plugins = [] }: CssOptions = {}) => {

@@ -24,7 +24,7 @@ export type Options = {
    * and returns a new array of plugins.
    * @default undefined
    */
-  additionalCssPlugins?: Plugin[] | ((getDefaultPlugins: Plugin[]) => Plugin[]);
+  postcssPlugins?: Plugin[] | ((defaultPlugins: Plugin[]) => Plugin[]);
 };
 
 export const PLUGIN_NAME = "unplugin-typed-css-modules";
@@ -60,7 +60,7 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
 
   const css = cssGenerator({
     banner: PREFIX,
-    plugins: opts.additionalCssPlugins,
+    plugins: opts.postcssPlugins,
   });
   const scss = scssGenerator({ banner: PREFIX });
 
