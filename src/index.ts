@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import type { Plugin } from "postcss";
 import { glob } from "tinyglobby";
 import type { UnpluginFactory } from "unplugin";
 import { createUnplugin } from "unplugin";
@@ -16,6 +17,14 @@ export type Options = {
    * @default false
    */
   scss?: boolean;
+  /**
+   * Additional PostCSS plugins to use when processing CSS files.
+   *
+   * Can be an array of plugins to be added, or a function that receives the default plugins
+   * and returns a new array of plugins.
+   * @default undefined
+   */
+  additionalCssPlugins?: Plugin[] | ((getDefaultPlugins: Plugin[]) => Plugin[]);
 };
 
 export const PLUGIN_NAME = "unplugin-typed-css-modules";
@@ -49,7 +58,10 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
     forceBuild: /(true|TRUE)/.test(process.env.TCM_FORCE_BUILD ?? ""),
   };
 
-  const css = cssGenerator({ banner: PREFIX });
+  const css = cssGenerator({
+    banner: PREFIX,
+    plugins: opts.additionalCssPlugins,
+  });
   const scss = scssGenerator({ banner: PREFIX });
 
   return {
